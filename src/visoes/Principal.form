@@ -11,46 +11,79 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="itemListarCliente">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Mostrar existentes"/>
+                <Property name="text" type="java.lang.String" value="Mostrar..."/>
               </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="itemCriarCliente">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Criar novo"/>
-              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemListarClienteActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuCargo">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Clientes"/>
+            <Property name="text" type="java.lang.String" value="Cargos"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="itemListarCargo">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Mostrar existentes"/>
+                <Property name="text" type="java.lang.String" value="Mostrar..."/>
               </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="itemCriarCargo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Criar novo"/>
-              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemListarCargoActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuFornecedor">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Clientes"/>
+            <Property name="text" type="java.lang.String" value="Fornecedores"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="itemListarFornecedor">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Mostrar existentes"/>
+                <Property name="text" type="java.lang.String" value="Mostrar..."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemListarFornecedorActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menuFuncionario">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Funcion&#xe1;rios"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="itemListarFuncionario">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar..."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemListarFuncionarioActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menuSetor">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Setores"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="itemListarSetor">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mostrar..."/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="itemCriarFornecedor">
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menuProduto">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Produtos"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="itemListarProduto">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Criar novo"/>
+                <Property name="text" type="java.lang.String" value="Mostrar..."/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -81,17 +114,17 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="sistemaDesktop" alignment="0" pref="400" max="32767" attributes="0"/>
+          <Component id="sistemaDesktop" alignment="0" pref="854" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="sistemaDesktop" alignment="1" pref="279" max="32767" attributes="0"/>
+          <Component id="sistemaDesktop" alignment="1" pref="629" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="view.SistemaDesktop" name="sistemaDesktop">
+    <Container class="visoes.SistemaDesktop" name="sistemaDesktop">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
         <Property name="useNullLayout" type="boolean" value="true"/>

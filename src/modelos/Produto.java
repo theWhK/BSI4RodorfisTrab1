@@ -3,15 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package modelos;
 
 /**
  *
  * @author willh
  */
-public class Produto {
+public class Produto implements Cloneable {
     
-        private String descricao;
+    public Produto getClone(){
+        try{
+            return (Produto)this.clone();
+        }catch(CloneNotSupportedException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    private String descricao;
 
     public String getDescricao() {
         return descricao;

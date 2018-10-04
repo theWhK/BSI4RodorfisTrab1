@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package modelos;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 /**
  *
@@ -11,45 +14,27 @@ package model;
  */
 public class Pessoa {
     
-        private String nome;
+    private String nome;
+
+    public static final String PROP_NOME = "nome";
 
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
+        String oldNome = this.nome;
         this.nome = nome;
+        propertyChangeSupport.firePropertyChange(PROP_NOME, oldNome, nome);
     }
 
-        private String cpf;
+    final transient PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
-    public String getCpf() {
-        return cpf;
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
     }
-
-        private String endereco;
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-        private String telefone;
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    
 }

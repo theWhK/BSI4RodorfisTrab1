@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package visoes;
 
 /**
  *
@@ -27,49 +27,84 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        sistemaDesktop = new view.SistemaDesktop();
+        sistemaDesktop = new visoes.SistemaDesktop();
         jMenuBar = new javax.swing.JMenuBar();
         menuCliente = new javax.swing.JMenu();
         itemListarCliente = new javax.swing.JMenuItem();
-        itemCriarCliente = new javax.swing.JMenuItem();
         menuCargo = new javax.swing.JMenu();
         itemListarCargo = new javax.swing.JMenuItem();
-        itemCriarCargo = new javax.swing.JMenuItem();
         menuFornecedor = new javax.swing.JMenu();
         itemListarFornecedor = new javax.swing.JMenuItem();
-        itemCriarFornecedor = new javax.swing.JMenuItem();
+        menuFuncionario = new javax.swing.JMenu();
+        itemListarFuncionario = new javax.swing.JMenuItem();
+        menuSetor = new javax.swing.JMenu();
+        itemListarSetor = new javax.swing.JMenuItem();
+        menuProduto = new javax.swing.JMenu();
+        itemListarProduto = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         menuCliente.setText("Clientes");
 
-        itemListarCliente.setText("Mostrar existentes");
+        itemListarCliente.setText("Mostrar...");
+        itemListarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemListarClienteActionPerformed(evt);
+            }
+        });
         menuCliente.add(itemListarCliente);
-
-        itemCriarCliente.setText("Criar novo");
-        menuCliente.add(itemCriarCliente);
 
         jMenuBar.add(menuCliente);
 
-        menuCargo.setText("Clientes");
+        menuCargo.setText("Cargos");
 
-        itemListarCargo.setText("Mostrar existentes");
+        itemListarCargo.setText("Mostrar...");
+        itemListarCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemListarCargoActionPerformed(evt);
+            }
+        });
         menuCargo.add(itemListarCargo);
-
-        itemCriarCargo.setText("Criar novo");
-        menuCargo.add(itemCriarCargo);
 
         jMenuBar.add(menuCargo);
 
-        menuFornecedor.setText("Clientes");
+        menuFornecedor.setText("Fornecedores");
 
-        itemListarFornecedor.setText("Mostrar existentes");
+        itemListarFornecedor.setText("Mostrar...");
+        itemListarFornecedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemListarFornecedorActionPerformed(evt);
+            }
+        });
         menuFornecedor.add(itemListarFornecedor);
 
-        itemCriarFornecedor.setText("Criar novo");
-        menuFornecedor.add(itemCriarFornecedor);
-
         jMenuBar.add(menuFornecedor);
+
+        menuFuncionario.setText("Funcionários");
+
+        itemListarFuncionario.setText("Mostrar...");
+        itemListarFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemListarFuncionarioActionPerformed(evt);
+            }
+        });
+        menuFuncionario.add(itemListarFuncionario);
+
+        jMenuBar.add(menuFuncionario);
+
+        menuSetor.setText("Setores");
+
+        itemListarSetor.setText("Mostrar...");
+        menuSetor.add(itemListarSetor);
+
+        jMenuBar.add(menuSetor);
+
+        menuProduto.setText("Produtos");
+
+        itemListarProduto.setText("Mostrar...");
+        menuProduto.add(itemListarProduto);
+
+        jMenuBar.add(menuProduto);
 
         setJMenuBar(jMenuBar);
 
@@ -77,15 +112,31 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sistemaDesktop, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(sistemaDesktop, javax.swing.GroupLayout.DEFAULT_SIZE, 854, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sistemaDesktop, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addComponent(sistemaDesktop, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void itemListarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListarFuncionarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemListarFuncionarioActionPerformed
+
+    private void itemListarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListarClienteActionPerformed
+        sistemaDesktop.abrirJanelaListarClientes();
+    }//GEN-LAST:event_itemListarClienteActionPerformed
+
+    private void itemListarCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListarCargoActionPerformed
+        sistemaDesktop.abrirJanelaListarCargos();
+    }//GEN-LAST:event_itemListarCargoActionPerformed
+
+    private void itemListarFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListarFornecedorActionPerformed
+       sistemaDesktop.abrirJanelaListarFornecedores();
+    }//GEN-LAST:event_itemListarFornecedorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,16 +174,19 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem itemCriarCargo;
-    private javax.swing.JMenuItem itemCriarCliente;
-    private javax.swing.JMenuItem itemCriarFornecedor;
     private javax.swing.JMenuItem itemListarCargo;
     private javax.swing.JMenuItem itemListarCliente;
     private javax.swing.JMenuItem itemListarFornecedor;
+    private javax.swing.JMenuItem itemListarFuncionario;
+    private javax.swing.JMenuItem itemListarProduto;
+    private javax.swing.JMenuItem itemListarSetor;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu menuCargo;
     private javax.swing.JMenu menuCliente;
     private javax.swing.JMenu menuFornecedor;
-    private view.SistemaDesktop sistemaDesktop;
+    private javax.swing.JMenu menuFuncionario;
+    private javax.swing.JMenu menuProduto;
+    private javax.swing.JMenu menuSetor;
+    private visoes.SistemaDesktop sistemaDesktop;
     // End of variables declaration//GEN-END:variables
 }
