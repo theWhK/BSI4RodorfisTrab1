@@ -9,12 +9,12 @@ package view;
  *
  * @author willh
  */
-public class ListarForncedores extends javax.swing.JInternalFrame {
+public class ListarClientes extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form ListaForncedores
+     * Creates new form ListarClientes
      */
-    public ListarForncedores() {
+    public ListarClientes() {
         initComponents();
     }
 
@@ -30,7 +30,7 @@ public class ListarForncedores extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setTitle("Listar Forncedores");
+        setTitle("Listar Clientes");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -49,10 +49,10 @@ public class ListarForncedores extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
