@@ -5,6 +5,9 @@
  */
 package modelos;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 /**
  *
  * @author willh
@@ -22,13 +25,26 @@ public class Funcionario extends Pessoa implements Cloneable
     
     private String codInterno;
 
+    public static final String PROP_CODINTERNO = "codInterno";
+
     public String getCodInterno() {
         return codInterno;
     }
 
     public void setCodInterno(String codInterno) {
+        String oldCodInterno = this.codInterno;
         this.codInterno = codInterno;
+        propertyChangeSupport.firePropertyChange(PROP_CODINTERNO, oldCodInterno, codInterno);
     }
 
+    private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
     
 }

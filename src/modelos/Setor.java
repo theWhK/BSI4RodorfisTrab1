@@ -5,6 +5,9 @@
  */
 package modelos;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 /**
  *
  * @author willh
@@ -22,13 +25,25 @@ public class Setor implements Cloneable {
     
     private String descricao;
 
+    public static final String PROP_DESCRICAO = "descricao";
+
     public String getDescricao() {
         return descricao;
     }
 
     public void setDescricao(String descricao) {
+        String oldDescricao = this.descricao;
         this.descricao = descricao;
+        propertyChangeSupport.firePropertyChange(PROP_DESCRICAO, oldDescricao, descricao);
     }
 
-    
+    final transient PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
 }
