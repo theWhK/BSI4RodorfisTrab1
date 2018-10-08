@@ -41,7 +41,7 @@ public class GerirFornecedor extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        fornecedor = new modelos.Fornecedor();
+        fornecedor = fornecedor == null ? new modelos.Fornecedor() : fornecedor;
         lblNomeFantasia = new javax.swing.JLabel();
         lblCnpj = new javax.swing.JLabel();
         lblEndereco = new javax.swing.JLabel();

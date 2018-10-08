@@ -41,7 +41,7 @@ public class GerirCargo extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        cargo = new modelos.Cargo();
+        cargo = cargo == null ? new modelos.Cargo() : cargo;
         lblDescricao = new javax.swing.JLabel();
         txtDescriao = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();

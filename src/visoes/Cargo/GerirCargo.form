@@ -3,6 +3,9 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <NonVisualComponents>
     <Component class="modelos.Cargo" name="cargo">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="cargo == null ? new modelos.Cargo() : cargo"/>
+      </AuxValues>
     </Component>
   </NonVisualComponents>
   <Properties>

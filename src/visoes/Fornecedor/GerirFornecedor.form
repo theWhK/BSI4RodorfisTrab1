@@ -3,6 +3,9 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <NonVisualComponents>
     <Component class="modelos.Fornecedor" name="fornecedor">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="fornecedor == null ? new modelos.Fornecedor() : fornecedor"/>
+      </AuxValues>
     </Component>
   </NonVisualComponents>
   <Properties>
