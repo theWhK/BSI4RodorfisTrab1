@@ -6,7 +6,10 @@
 
 package visoes.Fornecedor;
 
+import dao.FornecedorDAO;
+import java.util.List;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 import modelos.Fornecedor;
 import visoes.SistemaDesktop;
 
@@ -15,19 +18,23 @@ import visoes.SistemaDesktop;
  * @author willh
  */
 public class GerirFornecedor extends javax.swing.JInternalFrame {
+    private List<Fornecedor> lstFornecedores;
     private Fornecedor original;
 
     // Quando tá criando
-    public GerirFornecedor(){
-        this(null);
+    public GerirFornecedor(List<Fornecedor> lstFornecedores){
+        this(lstFornecedores, null);
     }
     
     // Quando tá alterando
-    public GerirFornecedor(Fornecedor f) {
+    public GerirFornecedor(List<Fornecedor> lstFornecedores, Fornecedor f) {
         if (f != null) {
             this.original = f;
             this.fornecedor = f.getClone();
         }
+        
+        this.lstFornecedores = lstFornecedores;
+        
         initComponents();
     }
 
@@ -182,11 +189,20 @@ public class GerirFornecedor extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (original == null) {
-            dados.Data.hi().getLstFornecedores().add(fornecedor);
-        } else {
-            dados.Data.hi().getLstFornecedores().set(dados.Data.hi().getLstFornecedores().indexOf(original), fornecedor);
+        if (this.txtCnpj.getText().length() != 14) {
+            JOptionPane.showMessageDialog(null, "O CNPJ deve conter somente 14 números.", "CNPJ incorreto!", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        
+        if(original==null){
+            lstFornecedores.add(fornecedor);
+        }
+        else{
+            lstFornecedores.set(lstFornecedores.indexOf(original), fornecedor);
+        }
+        FornecedorDAO cd = new FornecedorDAO();
+        cd.gravar(fornecedor);
+        
         JDesktopPane jd = this.getDesktopPane();
         if(jd instanceof SistemaDesktop){
             ((SistemaDesktop)jd).fecharJanelaGerirFornecedor();

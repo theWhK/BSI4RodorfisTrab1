@@ -5,6 +5,7 @@
  */
 package visoes.Cliente;
 
+import dao.ClienteDAO;
 import modelos.Cliente;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
@@ -33,7 +34,8 @@ public class ListarClientes extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        lstClientes = dados.Data.hi().getLstClientes();
+        clienteDAO = new dao.ClienteDAO();
+        lstClientes = clienteDAO.listar();
         scTbClientes = new javax.swing.JScrollPane();
         tbClientes = new javax.swing.JTable();
         btnNovo = new javax.swing.JButton();
@@ -147,7 +149,7 @@ public class ListarClientes extends javax.swing.JInternalFrame {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         JDesktopPane jd = this.getDesktopPane();
         if(jd instanceof SistemaDesktop){
-            ((SistemaDesktop)jd).abrirJanelaGerirCliente();
+            ((SistemaDesktop)jd).abrirJanelaGerirCliente(this.lstClientes);
         }
         
     }//GEN-LAST:event_btnNovoActionPerformed
@@ -158,7 +160,7 @@ public class ListarClientes extends javax.swing.JInternalFrame {
         
         JDesktopPane jd = this.getDesktopPane();
         if(jd instanceof SistemaDesktop){
-            ((SistemaDesktop)jd).abrirJanelaGerirCliente(lstClientes.get(selecionado));
+            ((SistemaDesktop)jd).abrirJanelaGerirCliente(this.lstClientes, lstClientes.get(selecionado));
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -172,6 +174,8 @@ public class ListarClientes extends javax.swing.JInternalFrame {
         if(dialogResult == JOptionPane.YES_OPTION){
             int selecionado = tbClientes.getSelectedRow();
             selecionado = tbClientes.convertRowIndexToModel(selecionado);
+            ClienteDAO cd = new ClienteDAO();
+            cd.apagar(lstClientes.get(selecionado));
             lstClientes.remove(selecionado);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -181,6 +185,7 @@ public class ListarClientes extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
+    private dao.ClienteDAO clienteDAO;
     private java.util.List<Cliente> lstClientes;
     private javax.swing.JScrollPane scTbClientes;
     private javax.swing.JTable tbClientes;

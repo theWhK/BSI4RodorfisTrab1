@@ -7,12 +7,33 @@ package modelos;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Objects;
 
 /**
  *
  * @author willh
  */
 public class Fornecedor implements Cloneable {
+    
+    
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Fornecedor other = (Fornecedor) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
     
     public Fornecedor getClone(){
         try{
@@ -21,6 +42,16 @@ public class Fornecedor implements Cloneable {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     private String nomeFantasia;

@@ -35,12 +35,8 @@ public class Principal extends javax.swing.JFrame {
         itemListarCargo = new javax.swing.JMenuItem();
         menuFornecedor = new javax.swing.JMenu();
         itemListarFornecedor = new javax.swing.JMenuItem();
-        menuFuncionario = new javax.swing.JMenu();
-        itemListarFuncionario = new javax.swing.JMenuItem();
         menuSetor = new javax.swing.JMenu();
         itemListarSetor = new javax.swing.JMenuItem();
-        menuProduto = new javax.swing.JMenu();
-        itemListarProduto = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,31 +76,17 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar.add(menuFornecedor);
 
-        menuFuncionario.setText("Funcionários");
-
-        itemListarFuncionario.setText("Mostrar...");
-        itemListarFuncionario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemListarFuncionarioActionPerformed(evt);
-            }
-        });
-        menuFuncionario.add(itemListarFuncionario);
-
-        jMenuBar.add(menuFuncionario);
-
         menuSetor.setText("Setores");
 
         itemListarSetor.setText("Mostrar...");
+        itemListarSetor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemListarSetorActionPerformed(evt);
+            }
+        });
         menuSetor.add(itemListarSetor);
 
         jMenuBar.add(menuSetor);
-
-        menuProduto.setText("Produtos");
-
-        itemListarProduto.setText("Mostrar...");
-        menuProduto.add(itemListarProduto);
-
-        jMenuBar.add(menuProduto);
 
         setJMenuBar(jMenuBar);
 
@@ -116,15 +98,11 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sistemaDesktop, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
+            .addComponent(sistemaDesktop, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void itemListarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListarFuncionarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_itemListarFuncionarioActionPerformed
 
     private void itemListarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListarClienteActionPerformed
         sistemaDesktop.abrirJanelaListarClientes();
@@ -137,6 +115,10 @@ public class Principal extends javax.swing.JFrame {
     private void itemListarFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListarFornecedorActionPerformed
        sistemaDesktop.abrirJanelaListarFornecedores();
     }//GEN-LAST:event_itemListarFornecedorActionPerformed
+
+    private void itemListarSetorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListarSetorActionPerformed
+        sistemaDesktop.abrirJanelaListarSetores();
+    }//GEN-LAST:event_itemListarSetorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,15 +159,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemListarCargo;
     private javax.swing.JMenuItem itemListarCliente;
     private javax.swing.JMenuItem itemListarFornecedor;
-    private javax.swing.JMenuItem itemListarFuncionario;
-    private javax.swing.JMenuItem itemListarProduto;
     private javax.swing.JMenuItem itemListarSetor;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu menuCargo;
     private javax.swing.JMenu menuCliente;
     private javax.swing.JMenu menuFornecedor;
-    private javax.swing.JMenu menuFuncionario;
-    private javax.swing.JMenu menuProduto;
     private javax.swing.JMenu menuSetor;
     private visoes.SistemaDesktop sistemaDesktop;
     // End of variables declaration//GEN-END:variables

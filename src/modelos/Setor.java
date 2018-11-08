@@ -7,12 +7,31 @@ package modelos;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Objects;
 
 /**
  *
  * @author willh
  */
 public class Setor implements Cloneable {
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Setor other = (Setor) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
     
     public Setor getClone(){
         try{
@@ -21,6 +40,16 @@ public class Setor implements Cloneable {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
     
     private String descricao;

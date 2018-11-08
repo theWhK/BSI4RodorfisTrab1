@@ -5,6 +5,7 @@
  */
 package visoes.Fornecedor;
 
+import dao.FornecedorDAO;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import modelos.Fornecedor;
@@ -33,7 +34,8 @@ public class ListarFornecedores extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        lstFornecedores = dados.Data.hi().getLstFornecedores();
+        fornecedorDAO = new dao.FornecedorDAO();
+        lstFornecedores = fornecedorDAO.listar();
         scTbFornecedores = new javax.swing.JScrollPane();
         tbFornecedores = new javax.swing.JTable();
         btnNovo = new javax.swing.JButton();
@@ -150,7 +152,7 @@ public class ListarFornecedores extends javax.swing.JInternalFrame {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         JDesktopPane jd = this.getDesktopPane();
         if(jd instanceof SistemaDesktop){
-            ((SistemaDesktop)jd).abrirJanelaGerirFornecedor();
+            ((SistemaDesktop)jd).abrirJanelaGerirFornecedor(this.lstFornecedores);
         }
         
     }//GEN-LAST:event_btnNovoActionPerformed
@@ -161,7 +163,7 @@ public class ListarFornecedores extends javax.swing.JInternalFrame {
         
         JDesktopPane jd = this.getDesktopPane();
         if(jd instanceof SistemaDesktop){
-            ((SistemaDesktop)jd).abrirJanelaGerirFornecedor(lstFornecedores.get(selecionado));
+            ((SistemaDesktop)jd).abrirJanelaGerirFornecedor(this.lstFornecedores, lstFornecedores.get(selecionado));
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -175,6 +177,8 @@ public class ListarFornecedores extends javax.swing.JInternalFrame {
         if(dialogResult == JOptionPane.YES_OPTION){
             int selecionado = tbFornecedores.getSelectedRow();
             selecionado = tbFornecedores.convertRowIndexToModel(selecionado);
+            FornecedorDAO cd = new FornecedorDAO();
+            cd.apagar(lstFornecedores.get(selecionado));
             lstFornecedores.remove(selecionado);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -184,6 +188,7 @@ public class ListarFornecedores extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
+    private dao.FornecedorDAO fornecedorDAO;
     private java.util.List<Fornecedor> lstFornecedores;
     private javax.swing.JScrollPane scTbFornecedores;
     private javax.swing.JTable tbFornecedores;

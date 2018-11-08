@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package visoes.Cargo;
+package visoes.Setor;
 
-import dao.CargoDAO;
-import dao.ClienteDAO;
-import modelos.Cargo;
+import visoes.Setor.*;
+import dao.SetorDAO;
+import modelos.Setor;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import visoes.SistemaDesktop;
@@ -16,12 +16,12 @@ import visoes.SistemaDesktop;
  *
  * @author willh
  */
-public class ListarCargos extends javax.swing.JInternalFrame {
+public class ListarSetores extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ListarClientes
      */
-    public ListarCargos() {
+    public ListarSetores() {
         initComponents();
     }
 
@@ -35,10 +35,10 @@ public class ListarCargos extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        cargoDAO = new dao.CargoDAO();
-        lstCargos = cargoDAO.listar();
-        scTbCargos = new javax.swing.JScrollPane();
-        tbCargos = new javax.swing.JTable();
+        setorDAO = new dao.SetorDAO();
+        lstSetores = setorDAO.listar();
+        scTbSetores = new javax.swing.JScrollPane();
+        tbSetores = new javax.swing.JTable();
         btnNovo = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
@@ -46,7 +46,7 @@ public class ListarCargos extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Listar Cargos");
+        setTitle("Listar Setores");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -65,14 +65,14 @@ public class ListarCargos extends javax.swing.JInternalFrame {
             }
         });
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstCargos, tbCargos);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstSetores, tbSetores);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${descricao}"));
         columnBinding.setColumnName("Descricao");
         columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
 
-        scTbCargos.setViewportView(tbCargos);
+        scTbSetores.setViewportView(tbSetores);
 
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -109,14 +109,14 @@ public class ListarCargos extends javax.swing.JInternalFrame {
                         .addComponent(btnAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnNovo))
-                    .addComponent(scTbCargos, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE))
+                    .addComponent(scTbSetores, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scTbCargos, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+                .addComponent(scTbSetores, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovo)
@@ -133,7 +133,7 @@ public class ListarCargos extends javax.swing.JInternalFrame {
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
         JDesktopPane jd = this.getDesktopPane();
         if(jd instanceof SistemaDesktop){
-            ((SistemaDesktop)jd).fecharJanelaListarCargos();
+            ((SistemaDesktop)jd).fecharJanelaListarSetores();
         }
         dispose();
     }//GEN-LAST:event_formInternalFrameClosing
@@ -141,7 +141,7 @@ public class ListarCargos extends javax.swing.JInternalFrame {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         JDesktopPane jd = this.getDesktopPane();
         if(jd instanceof SistemaDesktop){
-            ((SistemaDesktop)jd).abrirJanelaGerirCargo(this.lstCargos);
+            ((SistemaDesktop)jd).abrirJanelaGerirSetor(this.lstSetores);
         }
         
     }//GEN-LAST:event_btnNovoActionPerformed
@@ -154,21 +154,21 @@ public class ListarCargos extends javax.swing.JInternalFrame {
                             "Aviso",
                             dialogButton);
         if(dialogResult == JOptionPane.YES_OPTION){
-            int selecionado = tbCargos.getSelectedRow();
-            selecionado = tbCargos.convertRowIndexToModel(selecionado);
-            CargoDAO cd = new CargoDAO();
-            cd.apagar(lstCargos.get(selecionado));
-            lstCargos.remove(selecionado);
+            int selecionado = tbSetores.getSelectedRow();
+            selecionado = tbSetores.convertRowIndexToModel(selecionado);
+            SetorDAO cd = new SetorDAO();
+            cd.apagar(lstSetores.get(selecionado));
+            lstSetores.remove(selecionado);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        int selecionado = tbCargos.getSelectedRow();
-        selecionado = tbCargos.convertRowIndexToModel(selecionado);
+        int selecionado = tbSetores.getSelectedRow();
+        selecionado = tbSetores.convertRowIndexToModel(selecionado);
         
         JDesktopPane jd = this.getDesktopPane();
         if(jd instanceof SistemaDesktop){
-            ((SistemaDesktop)jd).abrirJanelaGerirCargo(this.lstCargos, lstCargos.get(selecionado));
+            ((SistemaDesktop)jd).abrirJanelaGerirSetor(this.lstSetores, lstSetores.get(selecionado));
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -177,10 +177,10 @@ public class ListarCargos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
-    private dao.CargoDAO cargoDAO;
-    private java.util.List<Cargo> lstCargos;
-    private javax.swing.JScrollPane scTbCargos;
-    private javax.swing.JTable tbCargos;
+    private java.util.List<Setor> lstSetores;
+    private javax.swing.JScrollPane scTbSetores;
+    private dao.SetorDAO setorDAO;
+    private javax.swing.JTable tbSetores;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

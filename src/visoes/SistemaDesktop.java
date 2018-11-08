@@ -5,9 +5,11 @@
  */
 package visoes;
 
+import java.util.List;
 import modelos.Cargo;
 import modelos.Cliente;
 import modelos.Fornecedor;
+import modelos.Setor;
 
 /**
  *
@@ -31,13 +33,13 @@ public class SistemaDesktop extends javax.swing.JDesktopPane {
     
     private visoes.Cliente.GerirCliente gerirCliente;
     
-    public void abrirJanelaGerirCliente() {
-        abrirJanelaGerirCliente(null);
+    public void abrirJanelaGerirCliente(List<Cliente> lstClientes) {
+        abrirJanelaGerirCliente(lstClientes, null);
     }
     
-    public void abrirJanelaGerirCliente(Cliente c) {
+    public void abrirJanelaGerirCliente(List<Cliente> lstClientes, Cliente c) {
         if(gerirCliente == null) {
-            gerirCliente = new visoes.Cliente.GerirCliente(c);
+            gerirCliente = new visoes.Cliente.GerirCliente(lstClientes, c);
             gerirCliente.setVisible(true);
             add(gerirCliente);
             gerirCliente.toFront();
@@ -64,13 +66,13 @@ public class SistemaDesktop extends javax.swing.JDesktopPane {
     
     private visoes.Cargo.GerirCargo gerirCargo;
     
-    public void abrirJanelaGerirCargo() {
-        abrirJanelaGerirCargo(null);
+    public void abrirJanelaGerirCargo(List<Cargo> lstCargos) {
+        abrirJanelaGerirCargo(lstCargos, null);
     }
     
-    public void abrirJanelaGerirCargo(Cargo c) {
+    public void abrirJanelaGerirCargo(List<Cargo> lstCargos, Cargo c) {
         if(gerirCargo == null) {
-            gerirCargo = new visoes.Cargo.GerirCargo(c);
+            gerirCargo = new visoes.Cargo.GerirCargo(lstCargos, c);
             gerirCargo.setVisible(true);
             add(gerirCargo);
             gerirCargo.toFront();
@@ -97,13 +99,13 @@ public class SistemaDesktop extends javax.swing.JDesktopPane {
     
     private visoes.Fornecedor.GerirFornecedor gerirFornecedor;
     
-    public void abrirJanelaGerirFornecedor() {
-        abrirJanelaGerirFornecedor(null);
+    public void abrirJanelaGerirFornecedor(List<Fornecedor> lstFornecedores) {
+        abrirJanelaGerirFornecedor(lstFornecedores, null);
     }
     
-    public void abrirJanelaGerirFornecedor(Fornecedor f) {
+    public void abrirJanelaGerirFornecedor(List<Fornecedor> lstFornecedores, Fornecedor f) {
         if(gerirFornecedor == null) {
-            gerirFornecedor = new visoes.Fornecedor.GerirFornecedor(f);
+            gerirFornecedor = new visoes.Fornecedor.GerirFornecedor(lstFornecedores, f);
             gerirFornecedor.setVisible(true);
             add(gerirFornecedor);
             gerirFornecedor.toFront();
@@ -112,5 +114,38 @@ public class SistemaDesktop extends javax.swing.JDesktopPane {
     
     public void fecharJanelaGerirFornecedor() {
         gerirFornecedor = null;
+    }
+    
+    private visoes.Setor.ListarSetores listarSetores;
+    
+    public void abrirJanelaListarSetores() {
+        if(listarSetores == null) {
+            listarSetores = new visoes.Setor.ListarSetores();
+            listarSetores.setVisible(true);
+            add(listarSetores);
+        }
+    }
+    
+    public void fecharJanelaListarSetores() {
+        listarSetores = null;
+    }
+    
+    private visoes.Setor.GerirSetor gerirSetor;
+    
+    public void abrirJanelaGerirSetor(List<Setor> lstSetor) {
+        abrirJanelaGerirSetor(lstSetor, null);
+    }
+    
+    public void abrirJanelaGerirSetor(List<Setor> lstSetores, Setor f) {
+        if(gerirSetor == null) {
+            gerirSetor = new visoes.Setor.GerirSetor(lstSetores, f);
+            gerirSetor.setVisible(true);
+            add(gerirSetor);
+            gerirSetor.toFront();
+        }
+    }
+    
+    public void fecharJanelaGerirSetor() {
+        gerirSetor = null;
     }
 }

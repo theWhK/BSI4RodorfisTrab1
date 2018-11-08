@@ -6,7 +6,10 @@
 
 package visoes.Cliente;
 
+import dao.ClienteDAO;
+import java.util.List;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 import modelos.Cliente;
 import visoes.SistemaDesktop;
 
@@ -15,20 +18,23 @@ import visoes.SistemaDesktop;
  * @author willh
  */
 public class GerirCliente extends javax.swing.JInternalFrame {
+    private List<Cliente> lstClientes;
     private Cliente original;
 
     // Quando tá criando
-    public GerirCliente(){
-        this(null);
+    public GerirCliente(List<Cliente> lstClientes){
+        this(lstClientes,null);
     }
     
     // Quando tá alterando
-    public GerirCliente(Cliente c) {
+    public GerirCliente(List<Cliente> lstClientes, Cliente c) {
         if (c != null) {
             this.original = c;
             this.cliente = c.getClone();
         }
-     
+        
+        this.lstClientes = lstClientes;
+        
         initComponents();
     }
 
@@ -181,11 +187,19 @@ public class GerirCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtEnderecoActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (original == null) {
-            dados.Data.hi().getLstClientes().add(cliente);
-        } else {
-            dados.Data.hi().getLstClientes().set(dados.Data.hi().getLstClientes().indexOf(original), cliente);
+        if (this.txtCpf.getText().length() != 11) {
+            JOptionPane.showMessageDialog(null, "O CPF deve conter somente 11 números.", "CPF incorreto!", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        
+        if(original==null){
+            lstClientes.add(cliente);
+        }
+        else{
+            lstClientes.set(lstClientes.indexOf(original), cliente);
+        }
+        ClienteDAO cd = new ClienteDAO();
+        cd.gravar(cliente);
         
         JDesktopPane jd = this.getDesktopPane();
         if(jd instanceof SistemaDesktop){

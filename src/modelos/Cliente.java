@@ -5,12 +5,34 @@
  */
 package modelos;
 
+import java.util.Objects;
+
 /**
  *
  * @author willh
  */
 public class Cliente extends Pessoa implements Cloneable
 {
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Cliente other = (Cliente) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     public Cliente getClone(){
         try{
             return (Cliente)this.clone();
@@ -19,7 +41,7 @@ public class Cliente extends Pessoa implements Cloneable
             return null;
         }
     }
-    /*
+    
     private Integer id;
 
     public Integer getId() {
@@ -29,7 +51,7 @@ public class Cliente extends Pessoa implements Cloneable
     public void setId(Integer id) {
         this.id = id;
     }
-    */
+    
 
     private String cpf;
 

@@ -2,12 +2,12 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <NonVisualComponents>
-    <Component class="dao.CargoDAO" name="cargoDAO">
+    <Component class="dao.SetorDAO" name="setorDAO">
     </Component>
-    <Component class="java.util.List" name="lstCargos">
+    <Component class="java.util.List" name="lstSetores">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="cargoDAO.listar()"/>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Cargo&gt;"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="setorDAO.listar()"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Setor&gt;"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
@@ -15,7 +15,7 @@
     <Property name="closable" type="boolean" value="true"/>
     <Property name="maximizable" type="boolean" value="true"/>
     <Property name="resizable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Listar Cargos"/>
+    <Property name="title" type="java.lang.String" value="Listar Setores"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -49,7 +49,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnNovo" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="scTbCargos" alignment="0" pref="411" max="32767" attributes="0"/>
+                  <Component id="scTbSetores" alignment="0" pref="411" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -59,7 +59,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="scTbCargos" pref="264" max="32767" attributes="0"/>
+              <Component id="scTbSetores" pref="264" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnNovo" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -72,16 +72,16 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JScrollPane" name="scTbCargos">
+    <Container class="javax.swing.JScrollPane" name="scTbSetores">
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tbCargos">
+        <Component class="javax.swing.JTable" name="tbSetores">
           <BindingProperties>
-            <BindingProperty name="elements" source="lstCargos" target="tbCargos" targetPath="elements" updateStrategy="0" immediately="true">
+            <BindingProperty name="elements" source="lstSetores" target="tbSetores" targetPath="elements" updateStrategy="0" immediately="true">
               <Subbinding sourcePath="${descricao}">
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
               </Subbinding>

@@ -6,8 +6,13 @@
 
 package visoes.Cargo;
 
+import dao.CargoDAO;
+import dao.SetorDAO;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JDesktopPane;
 import modelos.Cargo;
+import modelos.Setor;
 import visoes.SistemaDesktop;
 
 /**
@@ -15,20 +20,39 @@ import visoes.SistemaDesktop;
  * @author willh
  */
 public class GerirCargo extends javax.swing.JInternalFrame {
+    private List<Cargo> lstCargos;
     private Cargo original;
 
     // Quando tá criando
-    public GerirCargo(){
-        this(null);
+    public GerirCargo(List<Cargo> lstCargos){
+        this(lstCargos,null);
     }
     
     // Quando tá alterando
-    public GerirCargo(Cargo c) {
+    public GerirCargo(List<Cargo> lstCargos, Cargo c) {
         if (c != null) {
             this.original = c;
             this.cargo = c.getClone();
         }
+        
+        this.lstCargos = lstCargos;
+        
+        SetorDAO setorDAO = new SetorDAO();
+        List<Setor> lstSetores = setorDAO.listar();
+        
         initComponents();
+        
+        if (cargo != null) {
+            for (Setor t : lstSetores) {
+                if (!this.cargo.getSetoresPermitidos().contains(t)) {
+                    this.lstSetoresNPerm.add(t);
+                } else {
+                    this.lstSetoresPerm.add(t);
+                }
+            }
+        } else {
+            this.lstSetoresNPerm = lstSetores;
+        }
     }
 
     /** This method is called from within the constructor to
@@ -42,10 +66,24 @@ public class GerirCargo extends javax.swing.JInternalFrame {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         cargo = cargo == null ? new modelos.Cargo() : cargo;
+        lstSetoresPerm = lstSetoresPerm == null ? new ArrayList<>() : lstSetoresPerm;
+        lstSetoresNPerm = lstSetoresNPerm == null ? new ArrayList<>() : lstSetoresNPerm;
         lblDescricao = new javax.swing.JLabel();
         txtDescriao = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        lblTbSetPerm = new javax.swing.JLabel();
+        scTbSetPerm = new javax.swing.JScrollPane();
+        tbSetPerm = new javax.swing.JTable();
+        btnPermitir = new javax.swing.JButton();
+        btnNaoPermitir = new javax.swing.JButton();
+        lblTbSetNPerm = new javax.swing.JLabel();
+        scTbSetNPerm = new javax.swing.JScrollPane();
+        tbSetNPerm = new javax.swing.JTable();
+
+        lstSetoresPerm = org.jdesktop.observablecollections.ObservableCollections.observableList(lstSetoresPerm);
+
+        lstSetoresNPerm = org.jdesktop.observablecollections.ObservableCollections.observableList(lstSetoresNPerm);
 
         setClosable(true);
         setMaximizable(true);
@@ -88,42 +126,105 @@ public class GerirCargo extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+        lblTbSetPerm.setText("Setores Permitidos:");
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstSetoresPerm, tbSetPerm);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${descricao}"));
+        columnBinding.setColumnName("Descricao");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cargo, org.jdesktop.beansbinding.ELProperty.create("${setoresPermitidos}"), tbSetPerm, org.jdesktop.beansbinding.BeanProperty.create("selectedElements"));
+        bindingGroup.addBinding(binding);
+
+        scTbSetPerm.setViewportView(tbSetPerm);
+
+        btnPermitir.setText("/\\");
+            btnPermitir.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnPermitirActionPerformed(evt);
+                }
+            });
+
+            btnNaoPermitir.setText("\\/");
+            btnNaoPermitir.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnNaoPermitirActionPerformed(evt);
+                }
+            });
+
+            lblTbSetNPerm.setText("Setores Não Permitidos:");
+
+            jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, lstSetoresNPerm, tbSetNPerm);
+            columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${descricao}"));
+            columnBinding.setColumnName("Descricao");
+            columnBinding.setColumnClass(String.class);
+            bindingGroup.addBinding(jTableBinding);
+            jTableBinding.bind();
+
+            scTbSetNPerm.setViewportView(tbSetNPerm);
+
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(scTbSetPerm, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(btnPermitir)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(0, 88, Short.MAX_VALUE)
+                                    .addComponent(btnCancelar)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnSalvar))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnNaoPermitir)
+                                    .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(scTbSetNPerm, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblTbSetPerm)
+                                .addComponent(lblTbSetNPerm))
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblDescricao)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtDescriao)))
+                    .addContainerGap())
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblDescricao)
-                        .addGap(38, 38, 38)
-                        .addComponent(txtDescriao))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 196, Short.MAX_VALUE)
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSalvar)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDescricao)
-                    .addComponent(txtDescriao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalvar)
-                    .addComponent(btnCancelar))
-                .addContainerGap())
-        );
+                        .addComponent(txtDescriao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lblTbSetPerm)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(scTbSetPerm, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnPermitir)
+                        .addComponent(btnNaoPermitir))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblTbSetNPerm)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(scTbSetNPerm, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnSalvar)
+                        .addComponent(btnCancelar))
+                    .addContainerGap())
+            );
 
-        bindingGroup.bind();
+            bindingGroup.bind();
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+            pack();
+        }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         JDesktopPane jd = this.getDesktopPane();
@@ -134,11 +235,15 @@ public class GerirCargo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if (original == null) {
-            dados.Data.hi().getLstCargos().add(cargo);
-        } else {
-            dados.Data.hi().getLstCargos().set(dados.Data.hi().getLstCargos().indexOf(original), cargo);
+        if(original==null){
+            lstCargos.add(cargo);
         }
+        else{
+            lstCargos.set(lstCargos.indexOf(original), cargo);
+        }
+        CargoDAO cd = new CargoDAO();
+        cd.gravar(cargo);
+        
         JDesktopPane jd = this.getDesktopPane();
         if(jd instanceof SistemaDesktop){
             ((SistemaDesktop)jd).fecharJanelaGerirCargo();
@@ -154,12 +259,40 @@ public class GerirCargo extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_formInternalFrameClosing
 
+    private void btnPermitirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPermitirActionPerformed
+        int selecionado = this.tbSetNPerm.getSelectedRow();
+        selecionado = this.tbSetNPerm.convertRowIndexToModel(selecionado);
+        Setor item = this.lstSetoresNPerm.get(selecionado);
+        
+        this.lstSetoresPerm.add(item);
+        this.lstSetoresNPerm.remove(item);
+    }//GEN-LAST:event_btnPermitirActionPerformed
+
+    private void btnNaoPermitirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNaoPermitirActionPerformed
+        int selecionado = this.tbSetPerm.getSelectedRow();
+        selecionado = this.tbSetPerm.convertRowIndexToModel(selecionado);
+        Setor item = this.lstSetoresPerm.get(selecionado);
+        
+        this.lstSetoresNPerm.add(item);
+        this.lstSetoresPerm.remove(item);
+    }//GEN-LAST:event_btnNaoPermitirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnNaoPermitir;
+    private javax.swing.JButton btnPermitir;
     private javax.swing.JButton btnSalvar;
     private modelos.Cargo cargo;
     private javax.swing.JLabel lblDescricao;
+    private javax.swing.JLabel lblTbSetNPerm;
+    private javax.swing.JLabel lblTbSetPerm;
+    private java.util.List<Setor> lstSetoresNPerm;
+    private java.util.List<Setor> lstSetoresPerm;
+    private javax.swing.JScrollPane scTbSetNPerm;
+    private javax.swing.JScrollPane scTbSetPerm;
+    private javax.swing.JTable tbSetNPerm;
+    private javax.swing.JTable tbSetPerm;
     private javax.swing.JTextField txtDescriao;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables

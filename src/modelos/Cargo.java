@@ -7,12 +7,39 @@ package modelos;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  *
  * @author willh
  */
 public class Cargo implements Cloneable {
+    
+    public Cargo() {
+        if (this.setoresPermitidos == null) {
+            this.setoresPermitidos = new ArrayList<>();
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Cargo other = (Cargo) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
     
     public Cargo getClone(){
         try{
@@ -21,6 +48,16 @@ public class Cargo implements Cloneable {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
     
     private String descricao;
@@ -47,7 +84,25 @@ public class Cargo implements Cloneable {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
+    private List<Setor> setoresPermitidos;
 
-    private Setor[] setoresPermitidos;
+    public List<Setor> getSetoresPermitidos() {
+        return setoresPermitidos;
+    }
+
+    public void setSetoresPermitidos(List<Setor> setoresPermitidos) {
+        this.setoresPermitidos = setoresPermitidos;
+    }
     
+    public boolean addSetorPermitido(Setor s) {
+        if (this.setoresPermitidos.contains(s)) return true;
+        
+        return this.setoresPermitidos.add(s);
+    }
+    
+    public boolean removeSetorPermitido(Setor s) {
+        if (!this.setoresPermitidos.contains(s)) return true;
+        
+        return this.setoresPermitidos.remove(s);
+    }
 }
