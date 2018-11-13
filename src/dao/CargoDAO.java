@@ -24,23 +24,45 @@ public class CargoDAO extends DAO<Cargo>{
     protected boolean inserir(Cargo element) {
         String sql = "INSERT INTO cargo "
                 + "(descricao) values "
-                + "(?)";
+                + "(?);";
+                
+        String sql3 = "INSERT INTO cargo_setorespermitidos "
+                + "(id_cargo, id_setor) values "
+                + "(?, ?);";
         try(
             PreparedStatement stmt = conn.prepareStatement(sql,
                         Statement.RETURN_GENERATED_KEYS);
         ){
+            conn.setAutoCommit(false);
             stmt.setString(1, element.getDescricao());
             
-            System.out.println("sql:"+sql);
+            int key;
+            
             if(stmt.executeUpdate()==1){
                 ResultSet keys = stmt.getGeneratedKeys();
                 keys.next();
-                int key = keys.getInt(1);
+                key = keys.getInt(1);
                 element.setId(key);
+                                
+                for (Setor t : element.getSetoresPermitidos()) {
+                    PreparedStatement stmt3 = conn.prepareStatement(sql3);
+                    stmt3.setInt(1, element.getId());
+                    stmt3.setInt(2, t.getId());
+                    stmt3.executeUpdate();
+                }
             }
+      
+            conn.commit();
+            conn.setAutoCommit(true);
         }
-        catch(SQLException e){
-            e.printStackTrace();
+        catch(Exception e){
+            try{
+                conn.rollback();
+                conn.setAutoCommit(true);
+            }catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            System.out.println("Erro ao inserir a venda: "+e.getMessage());
         }
         return false;
     }
@@ -68,7 +90,8 @@ public class CargoDAO extends DAO<Cargo>{
                         + "setor "
                         + "JOIN cargo_setorespermitidos "
                         + "ON cargo_setorespermitidos.id_setor = setor.id_setor "
-                        + "WHERE cargo_setorespermitidos.id_cargo = "+rs.getInt("id_cargo");
+                        + "WHERE cargo_setorespermitidos.id_cargo = "+rs.getInt("id_cargo")+";";
+                                
                 try(
                     PreparedStatement stmt2 = conn.prepareStatement(sql2);
                     ResultSet rs2 = stmt2.executeQuery(sql2);
@@ -98,21 +121,47 @@ public class CargoDAO extends DAO<Cargo>{
         String sql = "UPDATE cargo "
                 + "SET descricao = ? "
                 + "WHERE id_cargo = ?";
+        
+        String sql2 = "DELETE FROM cargo_setorespermitidos WHERE id_cargo = ?;";
+        
+        String sql3 = "INSERT INTO cargo_setorespermitidos "
+                + "(id_cargo, id_setor) values "
+                + "(?, ?);";
         try(
             PreparedStatement stmt = conn.prepareStatement(sql);
         ){
+            conn.setAutoCommit(false);
             stmt.setString(1, element.getDescricao());
             stmt.setInt(2, element.getId());
             
-            System.out.println("sql:"+sql);
-            if(stmt.executeUpdate()==1){
-                return true;
+            int key = element.getId();
+            
+            if(stmt.executeUpdate()==1){                
+                PreparedStatement stmt2 = conn.prepareStatement(sql2);
+                stmt2.setInt(1, key);
+                stmt2.executeUpdate();
+                
+                for (Setor t : element.getSetoresPermitidos()) {
+                    PreparedStatement stmt3 = conn.prepareStatement(sql3);
+                    stmt3.setInt(1, element.getId());
+                    stmt3.setInt(2, t.getId());
+                    stmt3.executeUpdate();
+                }
             }
+            conn.commit();
+            conn.setAutoCommit(true);
         }
-        catch(SQLException e){
-            e.printStackTrace();
+        catch(Exception e){
+            try{
+                conn.rollback();
+                conn.setAutoCommit(true);
+            }catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            System.out.println("Erro ao inserir a venda: "+e.getMessage());
         }
         return false;
+        
     }
 
     @Override

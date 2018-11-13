@@ -76,6 +76,8 @@ public class SistemaDesktop extends javax.swing.JDesktopPane {
             gerirCargo.setVisible(true);
             add(gerirCargo);
             gerirCargo.toFront();
+        } else {
+            gerirCargo.toFront();
         }
     }
     

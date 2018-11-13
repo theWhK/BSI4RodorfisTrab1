@@ -42,16 +42,28 @@ public class GerirCargo extends javax.swing.JInternalFrame {
         
         initComponents();
         
-        if (cargo != null) {
+        if (c != null) {
             for (Setor t : lstSetores) {
-                if (!this.cargo.getSetoresPermitidos().contains(t)) {
+                System.out.println(t.getDescricao());
+                
+                boolean found = false;
+                
+                for (Setor y : this.original.getSetoresPermitidos()) {
+                    if (t.getId().equals(y.getId())) {
+                        found = true;
+                    }
+                }
+                
+                if (found == false) {
                     this.lstSetoresNPerm.add(t);
                 } else {
                     this.lstSetoresPerm.add(t);
                 }
             }
         } else {
-            this.lstSetoresNPerm = lstSetores;
+            for (Setor t : lstSetores) {
+                this.lstSetoresNPerm.add(t);
+            }
         }
     }
 
@@ -235,6 +247,11 @@ public class GerirCargo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        this.cargo.setSetoresPermitidos(null);
+        for (Setor t : this.lstSetoresPerm) {
+            this.cargo.addSetorPermitido(t);
+        }
+        
         if(original==null){
             lstCargos.add(cargo);
         }
@@ -266,6 +283,8 @@ public class GerirCargo extends javax.swing.JInternalFrame {
         
         this.lstSetoresPerm.add(item);
         this.lstSetoresNPerm.remove(item);
+        
+        
     }//GEN-LAST:event_btnPermitirActionPerformed
 
     private void btnNaoPermitirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNaoPermitirActionPerformed

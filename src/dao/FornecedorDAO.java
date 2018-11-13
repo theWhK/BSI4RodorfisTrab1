@@ -22,8 +22,8 @@ public class FornecedorDAO extends DAO<Fornecedor>{
     @Override
     protected boolean inserir(Fornecedor element) {
         String sql = "INSERT INTO fornecedor "
-                + "(cnpj, telefone, endereco, razaosocial) values "
-                + "(?, ?, ?, ?)";
+                + "(cnpj, telefone, endereco, razaosocial, nomefantasia) values "
+                + "(?, ?, ?, ?, ?)";
         try(
             PreparedStatement stmt = conn.prepareStatement(sql,
                         Statement.RETURN_GENERATED_KEYS);
@@ -32,6 +32,7 @@ public class FornecedorDAO extends DAO<Fornecedor>{
             stmt.setString(2, element.getTelefone());
             stmt.setString(3, element.getEndereco());
             stmt.setString(4, element.getRazaoSocial());
+            stmt.setString(5, element.getNomeFantasia());
             
             System.out.println("sql:"+sql);
             if(stmt.executeUpdate()==1){
@@ -65,6 +66,7 @@ public class FornecedorDAO extends DAO<Fornecedor>{
                 c.setEndereco(rs.getString("endereco"));
                 c.setTelefone(rs.getString("telefone"));
                 c.setRazaoSocial(rs.getString("razaosocial"));
+                c.setNomeFantasia(rs.getString("nomefantasia"));
                 lst.add(c);
             }
         }catch(SQLException e){
@@ -77,7 +79,7 @@ public class FornecedorDAO extends DAO<Fornecedor>{
     @Override
     protected boolean alterar(Fornecedor element) {
         String sql = "UPDATE fornecedor "
-                + "SET cnpj = ?, telefone = ?, endereco = ?, razaosocial = ? "
+                + "SET cnpj = ?, telefone = ?, endereco = ?, razaosocial = ?, nomefantasia = ? "
                 + "WHERE id_fornecedor = ?";
         try(
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -86,7 +88,8 @@ public class FornecedorDAO extends DAO<Fornecedor>{
             stmt.setString(2, element.getTelefone());
             stmt.setString(3, element.getEndereco());
             stmt.setString(4, element.getRazaoSocial());
-            stmt.setInt(5, element.getId());
+            stmt.setString(5, element.getNomeFantasia());
+            stmt.setInt(6, element.getId());
             
             System.out.println("sql:"+sql);
             if(stmt.executeUpdate()==1){
@@ -127,6 +130,7 @@ public class FornecedorDAO extends DAO<Fornecedor>{
                 c.setEndereco(rs.getString("endereco"));
                 c.setTelefone(rs.getString("telefone"));
                 c.setRazaoSocial(rs.getString("razaosocial"));
+                c.setNomeFantasia(rs.getString("nomefantasia"));
                 lst.add(c);
             }
         }catch(SQLException e){
@@ -152,6 +156,7 @@ public class FornecedorDAO extends DAO<Fornecedor>{
                 c.setEndereco(rs.getString("endereco"));
                 c.setTelefone(rs.getString("telefone"));
                 c.setRazaoSocial(rs.getString("razaosocial"));
+                c.setNomeFantasia(rs.getString("nomefantasia"));
             }
         }
         catch(SQLException e){

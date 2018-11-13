@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import modelos.Setor;
 
 /**
  *
@@ -17,12 +18,6 @@ import java.util.Objects;
  */
 public class Cargo implements Cloneable {
     
-    public Cargo() {
-        if (this.setoresPermitidos == null) {
-            this.setoresPermitidos = new ArrayList<>();
-        }
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -43,7 +38,11 @@ public class Cargo implements Cloneable {
     
     public Cargo getClone(){
         try{
-            return (Cargo)this.clone();
+            Cargo c = (Cargo)this.clone();
+            for (Setor t : this.setoresPermitidos) {
+                c.addSetorPermitido(t);
+            }
+            return c;
         }catch(CloneNotSupportedException e){
             e.printStackTrace();
             return null;
@@ -73,20 +72,13 @@ public class Cargo implements Cloneable {
         this.descricao = descricao;
         propertyChangeSupport.firePropertyChange(PROP_DESCRICAO, oldDescricao, descricao);
     }
-
-    private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
-    }
-
+    
     private List<Setor> setoresPermitidos;
 
     public List<Setor> getSetoresPermitidos() {
+        if (this.setoresPermitidos == null) {
+            this.setoresPermitidos = new ArrayList<>();
+        }
         return setoresPermitidos;
     }
 
@@ -95,14 +87,34 @@ public class Cargo implements Cloneable {
     }
     
     public boolean addSetorPermitido(Setor s) {
-        if (this.setoresPermitidos.contains(s)) return true;
+        if (this.setoresPermitidos == null) {
+            this.setoresPermitidos = new ArrayList<>();
+        }
+        for (Setor t : this.setoresPermitidos) {
+            if (t.getId().equals(s.getId())) return true;
+        }
         
         return this.setoresPermitidos.add(s);
     }
     
     public boolean removeSetorPermitido(Setor s) {
-        if (!this.setoresPermitidos.contains(s)) return true;
+        if (this.setoresPermitidos == null) {
+            this.setoresPermitidos = new ArrayList<>();
+        }
+        for (Setor t : this.setoresPermitidos) {
+            if (t.getId().equals(s.getId())) return this.setoresPermitidos.remove(s);
+        }
         
-        return this.setoresPermitidos.remove(s);
+        return true;
+    }
+    
+    private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
     }
 }
